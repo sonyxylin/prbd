@@ -1,0 +1,105 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema tarasov_univer
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema tarasov_univer
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `tarasov_univer` DEFAULT CHARACTER SET utf8 ;
+USE `tarasov_univer` ;
+
+-- -----------------------------------------------------
+-- Table `tarasov_univer`.`student`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarasov_univer`.`student` (
+  `idstudent` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `group` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idstudent`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tarasov_univer`.`sotrudnik`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarasov_univer`.`sotrudnik` (
+  `idsotrudnik` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `rang` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idsotrudnik`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tarasov_univer`.`prepod`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarasov_univer`.`prepod` (
+  `idprepod` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `rang` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idprepod`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tarasov_univer`.`subject`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarasov_univer`.`subject` (
+  `idsubject` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `opisanie` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idsubject`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `tarasov_univer`.`begunok`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `tarasov_univer`.`begunok` (
+  `student_idstudent` INT NOT NULL,
+  `sotrudnik_idsotrudnik` INT NOT NULL,
+  `prepod_idprepod` INT NOT NULL,
+  `subject_idsubject` INT NOT NULL,
+  `date` VARCHAR(45) NOT NULL,
+  `ID` VARCHAR(45) NOT NULL,
+  `mark` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`student_idstudent`, `sotrudnik_idsotrudnik`, `prepod_idprepod`, `subject_idsubject`),
+  INDEX `fk_student_has_sotrudnik_sotrudnik1_idx` (`sotrudnik_idsotrudnik` ASC) VISIBLE,
+  INDEX `fk_student_has_sotrudnik_student_idx` (`student_idstudent` ASC) VISIBLE,
+  INDEX `fk_begunok_prepod1_idx` (`prepod_idprepod` ASC) VISIBLE,
+  INDEX `fk_begunok_subject1_idx` (`subject_idsubject` ASC) VISIBLE,
+  CONSTRAINT `fk_student_has_sotrudnik_student`
+    FOREIGN KEY (`student_idstudent`)
+    REFERENCES `tarasov_univer`.`student` (`idstudent`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_student_has_sotrudnik_sotrudnik1`
+    FOREIGN KEY (`sotrudnik_idsotrudnik`)
+    REFERENCES `tarasov_univer`.`sotrudnik` (`idsotrudnik`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_begunok_prepod1`
+    FOREIGN KEY (`prepod_idprepod`)
+    REFERENCES `tarasov_univer`.`prepod` (`idprepod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_begunok_subject1`
+    FOREIGN KEY (`subject_idsubject`)
+    REFERENCES `tarasov_univer`.`subject` (`idsubject`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

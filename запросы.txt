@@ -1,0 +1,15 @@
+SELECT * FROM `tarasov_univer`.`begunok`;
+
+SELECT student_idstudent, mark FROM `tarasov_univer`.`begunok`;
+
+SELECT 
+	idstudent, mark, idprepod
+FROM 
+	`tarasov_univer`.`student`,
+    `tarasov_univer`.`begunok`,
+    `tarasov_univer`.`prepod`
+WHERE
+	`student`.`idstudent` = `begunok`.`student_idstudent`
+    AND `prepod`.`idprepod` = `begunok`.`prepod_idprepod`
+    AND `begunok`.`mark` in ('3') 
+	
