@@ -3,7 +3,7 @@ SELECT * FROM `tarasov_univer`.`begunok`;
 SELECT student_idstudent, mark FROM `tarasov_univer`.`begunok`;
 
 SELECT 
-	idstudent, mark, idprepod
+	`student`.`surname`, `student`.`name`, mark, `prepod`.`surname`, `prepod`.`name`
 FROM 
 	`tarasov_univer`.`student`,
     `tarasov_univer`.`begunok`,
